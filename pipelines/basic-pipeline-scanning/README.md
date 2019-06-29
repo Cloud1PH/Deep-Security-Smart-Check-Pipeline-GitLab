@@ -1,7 +1,7 @@
 # Basic Pipeline
 ## Description
 
-Pipeline scanning ensures that our images are secure **before** they are released into production.   
+This is a basic example of how Smart Check can be integrated into a GitLab pipeline.   
 
 # Instructions
 ## Find & Replace
@@ -59,4 +59,4 @@ Pipeline scanning ensures that our images are secure **before** they are release
 
 5. Browse to the CI/CD pipeline and watch it perform its tasks. 
 
-6. Once the job fails, browse to the Smart Check UI and click "Scans". 
+6. Once the job fails, browse to the Smart Check UI and click "Scans" to examine the problem(s) Smart Check found. 
