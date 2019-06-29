@@ -1,0 +1,42 @@
+image: docker:stable
+
+variables:
+  DOCKER_HOST: tcp://docker:2375/
+  DOCKER_DRIVER: overlay2
+
+before_script:
+  - docker login -u "$REGISTRY_USERNAME" -p "$REGISTRY_PASSWORD" "$REGISTRY_HOSTNAME":5000
+
+services:
+  - docker:dind
+
+stages:
+  - lint
+  - build
+  - security
+
+lint pipeline:
+  stage: lint
+  script:
+    - 'docker run --rm -t -v $(pwd):/workdir giantswarm/yamllint -d "{extends: relaxed, rules:{line-length: {max: 150}}}" ./.gitlab-ci.yml'
+
+build container:
+  stage: build
+  script:
+    - docker build -t "$REGISTRY_HOSTNAME":5000/basic-website .
+    - docker push "$REGISTRY_HOSTNAME":5000/basic-website
+
+check security:
+  stage: security
+  script:
+    - docker pull "$REGISTRY_HOSTNAME":5000/basic-website
+    - >-
+        docker run -v /var/run/docker.sock:/var/run/docker.sock
+        deepsecurity/smartcheck-scan-action
+        --image-name "$REGISTRY_HOSTNAME":5000/basic-website
+        --smartcheck-host="$DSSC_HOSTNAME"
+        --smartcheck-user="$DSSC_USERNAME"
+        --smartcheck-password="$DSSC_PASSWORD"
+        --insecure-skip-tls-verify
+        --insecure-skip-registry-tls-verify
+        --image-pull-auth='{"username": "'"$REGISTRY_USERNAME"'", "password": "'"$REGISTRY_PASSWORD"'"}'
