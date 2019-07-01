@@ -26,7 +26,7 @@ build container:
     - docker build -t "$REGISTRY_HOSTNAME":5000/basic-website .
     - docker push "$REGISTRY_HOSTNAME":5000/basic-website
 
-check security:
+run Smart Check:
   stage: security
   script:
     - docker pull "$REGISTRY_HOSTNAME":5000/basic-website

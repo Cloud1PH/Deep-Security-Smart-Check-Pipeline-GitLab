@@ -1,0 +1,9 @@
+version: "3.3"
+
+services:
+  safe-website:
+    container_name: safe-website
+    image: ${BLESSED_REGISTRY_HOSTNAME}/safe-website
+    ports:
+      - 8080:80
+    restart: always

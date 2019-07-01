@@ -1,0 +1,51 @@
+image: docker:stable
+
+variables:
+  DOCKER_HOST: tcp://docker:2375/
+  DOCKER_DRIVER: overlay2
+
+before_script:
+  - docker login -u "$BLESSED_REGISTRY_USERNAME" -p "$DIRTY_REGISTRY_PASSWORD" "$DIRTY_REGISTRY_HOSTNAME":5000
+  - docker login -u "$DIRTY_REGISTRY_USERNAME" -p "$DIRTY_REGISTRY_PASSWORD" "$DIRTY_REGISTRY_HOSTNAME":5001
+
+services:
+  - docker:dind
+
+stages:
+  - lint
+  - build
+  - security
+  - push
+
+lint pipeline:
+  stage: lint
+  script:
+    - 'docker run --rm -t -v $(pwd):/workdir giantswarm/yamllint -d "{extends: relaxed, rules:{line-length: {max: 150}}}" ./.gitlab-ci.yml'
+
+build container:
+  stage: build
+  script:
+    - docker build -t "$DIRTY_REGISTRY_HOSTNAME":5001/safe-website .
+    - docker push "$DIRTY_REGISTRY_HOSTNAME":5001/safe-website
+
+run Smart Check:
+  stage: security
+  script:
+    - docker pull "$DIRTY_REGISTRY_HOSTNAME":5001/safe-website
+    - >-
+        docker run -v /var/run/docker.sock:/var/run/docker.sock
+        deepsecurity/smartcheck-scan-action
+        --image-name "$DIRTY_REGISTRY_HOSTNAME":5001/safe-website
+        --smartcheck-host="$DSSC_HOSTNAME"
+        --smartcheck-user="$DSSC_USERNAME"
+        --smartcheck-password="$DSSC_PASSWORD"
+        --insecure-skip-tls-verify
+        --insecure-skip-registry-tls-verify
+        --image-pull-auth='{"username": "'"$DIRTY_REGISTRY_USERNAME"'", "password": "'"$DIRTY_REGISTRY_PASSWORD"'"}'
+
+push clean image:
+  stage: push
+  script:
+    - docker pull "$DIRTY_REGISTRY_HOSTNAME":5001/safe-website
+    - docker tag "$DIRTY_REGISTRY_HOSTNAME":5001/safe-website "$BLESSED_REGISTRY_HOSTNAME":5000/safe-website
+    - docker push "$BLESSED_REGISTRY_HOSTNAME":5000/safe-website
