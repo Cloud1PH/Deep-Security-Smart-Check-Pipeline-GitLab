@@ -52,7 +52,7 @@ This is a basic example of how Smart Check can be integrated into a GitLab pipel
 	wget https://raw.githubusercontent.com/OzNetNerd/Smart-Check-Pipeline-GitLab/master/pipelines/basic-pipeline-scanning/files/Dockerfile
 	wget https://raw.githubusercontent.com/OzNetNerd/Smart-Check-Pipeline-GitLab/master/pipelines/basic-pipeline scanning/files/index.html
 	wget https://raw.githubusercontent.com/OzNetNerd/Smart-Check-Pipeline-GitLab/master/pipelines/basic-pipeline-scanning/files/banner.jpg
-	https://raw.githubusercontent.com/OzNetNerd/Deep-Security-Smart-Check-Pipeline-GitLab/master/pipelines/basic-pipeline-scanning/files/.gitlab-ci.yml
+	wget https://raw.githubusercontent.com/OzNetNerd/Deep-Security-Smart-Check-Pipeline-GitLab/master/pipelines/basic-pipeline-scanning/files/.gitlab-ci.yml
 	git add .
 	git commit -m 'Initial commit'
 	git push
