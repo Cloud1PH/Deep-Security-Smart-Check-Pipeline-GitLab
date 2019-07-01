@@ -48,7 +48,7 @@ This is a basic example of how Smart Check can be integrated into a GitLab pipel
 4. Navigate to the new directory and pull down the files required for this example:
 	
 	```
-	cd pipeline-scanning
+	cd basic-pipeline-scanning
 	wget https://raw.githubusercontent.com/OzNetNerd/Smart-Check-Pipeline-GitLab/master/pipelines/basic-pipeline-scanning/files/Dockerfile
 	wget https://raw.githubusercontent.com/OzNetNerd/Smart-Check-Pipeline-GitLab/master/pipelines/basic-pipeline scanning/files/index.html
 	wget https://raw.githubusercontent.com/OzNetNerd/Smart-Check-Pipeline-GitLab/master/pipelines/basic-pipeline-scanning/files/banner.jpg
