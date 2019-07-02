@@ -66,6 +66,7 @@ This two staged approach ensures that only known safe images are available for c
 	wget https://raw.githubusercontent.com/OzNetNerd/Deep-Security-Smart-Check-Pipeline-GitLab/master/pipelines/dual-registry-pipeline/files/Dockerfile
 	wget https://raw.githubusercontent.com/OzNetNerd/Deep-Security-Smart-Check-Pipeline-GitLab/master/pipelines/dual-registry-pipeline/files/index.html
 	wget https://raw.githubusercontent.com/OzNetNerd/Deep-Security-Smart-Check-Pipeline-GitLab/master/pipelines/dual-registry-pipeline/files/.gitlab-ci.yml
+	wget https://raw.githubusercontent.com/OzNetNerd/Deep-Security-Smart-Check-Pipeline-GitLab/master/pipelines/dual-registry-pipeline/files/docker-compose.yml
 	git add .
 	git commit -m 'Initial commit'
 	git push
@@ -73,13 +74,20 @@ This two staged approach ensures that only known safe images are available for c
 
 6. Browse to the CI/CD pipeline and watch it perform its tasks.
 
-7. Browse to http://<gitlab_hostname>:8080 to view the website.
+7. When the pipeline finishes running, the image is ready for end-user consumption. Spin it up with the following command:
 
-8. Make a modification to `index.html` then push the changes:
+	```
+	docker login <blessed_registry_hostname>:5000 -u <blessed_registry_username> -p <blessed_registry_password>
+	BLESSED_REGISTRY_HOSTNAME=<blessed_registry_hostname> docker-compose up -d
+	```
+
+8. Browse to `http://<gitlab_hostname>:8080` to view the website.
+
+9. Modify the `Hello World` string in `index.html`, then commit and push the changes:
 
 	```
 	git commit -m 'Initial commit'
 	git push
 	```
 	
-9. Repeat steps 6 and 7.
+10. Repeat steps 6 to 8.

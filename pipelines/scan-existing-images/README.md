@@ -17,12 +17,14 @@ When used it in a real-world environment, it is highly recommended that issues i
 
 	```
 	docker pull vulnerables/web-dvwa
+	docker pull appsecco/dsvw
 	```
 
 2. Tag it with the address of your Docker registry:
 
 	```
 	docker tag vulnerables/web-dvwa <registry_hostname>:5000/web-dvwa
+	docker tag  appsecco/dsvw <registry_hostname>:5000/dsvw
 	```
 
 3. Log into your registry:
@@ -35,6 +37,7 @@ When used it in a real-world environment, it is highly recommended that issues i
 
 	```
 	docker push <registry_hostname>:5000/web-dvwa
+	docker push <registry_hostname>:5000/dsvw
 	```
 
 ## Scan registry
