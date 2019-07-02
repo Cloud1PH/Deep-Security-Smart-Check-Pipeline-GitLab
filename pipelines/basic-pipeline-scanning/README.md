@@ -22,17 +22,7 @@ This is a basic example of how Smart Check can be integrated into a GitLab pipel
 
 	If you're asked to add an SSH, click **"Don't show again"** 
  
-2. Set up git and clone the project:
-
-	```
-	git config --global user.name "Administrator"
-	git config --global user.email "admin@example.com"
-	git clone http://<gitlab_hostname>/root/basic-pipeline-scanning.git
-	```
-
-	When prompted, enter your GitLab username (`root`) and password.
-
-3. 	Navigate to "Settings -> CI/CD". Make the following changes:
+2. 	Navigate to "Settings -> CI/CD". Make the following changes:
 	1. Turn "Auto DevOps" off
 	2. Configure the following variables:
 		* **REGISTRY_HOSTNAME:** <registry_hostname>
@@ -43,7 +33,16 @@ This is a basic example of how Smart Check can be integrated into a GitLab pipel
 		* **DSSC_PASSWORD:** <dssc_password>
 		
 		**Note:** Mark all variables as "Protected" and click the "Hide values" button.
-		
+
+3. Set up git and clone the project:
+
+	```
+	git config --global user.name "Administrator"
+	git config --global user.email "admin@example.com"
+	git clone http://<gitlab_hostname>/root/basic-pipeline-scanning.git
+	```
+
+	When prompted, enter your GitLab username (`root`) and password.		
 
 4. Navigate to the new directory and pull down the files required for this example:
 	
@@ -60,4 +59,12 @@ This is a basic example of how Smart Check can be integrated into a GitLab pipel
 
 5. Browse to the CI/CD pipeline and watch it perform its tasks. 
 
-6. Once the job fails, browse to the Smart Check UI and click "Scans" to examine the problem(s) Smart Check found. 
+6. When the scan finishes running, uncomment the `banner.jpg` line from the Dockerfile. 
+
+7. Commit and push the change.
+	```
+	git commit -am 'Added banner'
+	git push
+	```
+
+8. Once the job fails, browse to the Smart Check UI and click "Scans" to examine the problem(s) Smart Check found. 

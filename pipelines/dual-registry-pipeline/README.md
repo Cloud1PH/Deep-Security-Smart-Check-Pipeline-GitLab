@@ -34,17 +34,7 @@ This two staged approach ensures that only known safe images are available for c
 
 	If you're asked to add an SSH, click **"Don't show again"** 
  
-3. Set up git and clone the project:
-
-	```
-	git config --global user.name "Administrator"
-	git config --global user.email "admin@example.com"
-	git clone http://<gitlab_hostname>/root/dual-registry-pipeline.git
-	```
-
-	When prompted, enter your GitLab username (`root`) and password.
-
-4. 	Navigate to "Settings -> CI/CD". Make the following changes:
+3. 	Navigate to "Settings -> CI/CD". Make the following changes:
 	1. Turn "Auto DevOps" off
 	2. Configure the following variables:
 		* **BLESSED_REGISTRY_HOSTNAME:** <blessed_registry_hostname>
@@ -58,6 +48,16 @@ This two staged approach ensures that only known safe images are available for c
 		* **DSSC_PASSWORD:** <dssc_password>
 		
 		**Note:** Mark all variables as "Protected" and click the "Hide values" button.
+
+4. Set up git and clone the project:
+
+	```
+	git config --global user.name "Administrator"
+	git config --global user.email "admin@example.com"
+	git clone http://<gitlab_hostname>/root/dual-registry-pipeline.git
+	```
+	
+	When prompted, enter your GitLab username (`root`) and password.
 		
 5. Navigate to the new directory and pull down the files required for this example:
 	
@@ -78,6 +78,7 @@ This two staged approach ensures that only known safe images are available for c
 
 	```
 	docker login <blessed_registry_hostname>:5000 -u <blessed_registry_username> -p <blessed_registry_password>
+	docker pull <blessed_registry_hostname>:5000/safe-website
 	BLESSED_REGISTRY_HOSTNAME=<blessed_registry_hostname> docker-compose up -d
 	```
 
@@ -86,7 +87,7 @@ This two staged approach ensures that only known safe images are available for c
 9. Modify the `Hello World` string in `index.html`, then commit and push the changes:
 
 	```
-	git commit -m 'Initial commit'
+	git commit -am 'Updated index.html'
 	git push
 	```
 	
