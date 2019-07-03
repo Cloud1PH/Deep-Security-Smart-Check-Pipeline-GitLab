@@ -47,7 +47,7 @@ This two staged approach ensures that only known safe images are available for c
 		* **DSSC_USERNAME:** <dssc_username>
 		* **DSSC_PASSWORD:** <dssc_password>
 		
-		**Note:** Mark all variables as "Protected" and click the "Hide values" button.
+		Click "Save variables"
 
 4. Set up git and clone the project:
 
