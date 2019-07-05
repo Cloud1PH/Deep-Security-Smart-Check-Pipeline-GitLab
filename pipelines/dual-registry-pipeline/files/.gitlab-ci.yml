@@ -45,6 +45,8 @@ run Smart Check:
 
 push clean image:
   stage: push
+  only:
+    - master
   script:
     - docker pull "$DIRTY_REGISTRY_HOSTNAME":5001/safe-website
     - docker tag "$DIRTY_REGISTRY_HOSTNAME":5001/safe-website "$BLESSED_REGISTRY_HOSTNAME":5000/safe-website
