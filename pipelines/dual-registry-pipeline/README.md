@@ -84,11 +84,14 @@ This two staged approach ensures that only known safe images are available for c
 
 8. Browse to `http://<gitlab_hostname>:8080` to view the website.
 
-9. Modify the `Hello World` string in `index.html`, then commit and push the changes:
-
+9. Uncomment the `banner.jpg` line from the Dockerfile.
+ 
+10. Commit and push the change.
 	```
-	git commit -am 'Updated index.html'
+	git commit -am 'Added banner'
 	git push
 	```
-	
-10. Repeat steps 6 to 8.
+
+11. Once the job fails, browse to the Smart Check UI and click "Scans" to examine the problem(s) Smart Check found.
+
+	**Note:**  Because the change failed the pipeline, the modified `Dockerfile` will not be published. Therefore your image will continue to be safe. 

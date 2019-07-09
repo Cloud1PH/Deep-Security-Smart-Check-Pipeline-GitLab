@@ -17,6 +17,7 @@ stages:
   - build
   - security
   - push
+  - failure_notification
 
 lint pipeline:
   stage: lint
@@ -31,6 +32,10 @@ build container:
 
 run Smart Check:
   stage: security
+  artifacts:
+    when: always
+    paths:
+      - report.txt
   script:
     - docker pull "$DIRTY_REGISTRY_HOSTNAME":5001/$APP_NAME
     - >-
@@ -43,6 +48,18 @@ run Smart Check:
         --insecure-skip-tls-verify
         --insecure-skip-registry-tls-verify
         --image-pull-auth='{"username": "'"$DIRTY_REGISTRY_USERNAME"'", "password": "'"$DIRTY_REGISTRY_PASSWORD"'"}'
+        > report.txt
+
+failure notification:
+  stage: failure_notification
+  when: on_failure
+  script:
+    - >-
+        docker run -e SLACK_API_TOKEN="$SLACK_API_TOKEN"
+        -e SLACK_CHANNEL_NAME=pipeline-status
+        -e SMART_CHECK_URL=http://"$DSSC_HOSTNAME"
+        -v ${PWD}/report.txt:/tmp/report.txt
+        oznetnerd/smart-check-pipeline-notifications
 
 push clean image:
   stage: push
