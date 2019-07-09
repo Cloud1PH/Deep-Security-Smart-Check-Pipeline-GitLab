@@ -3,7 +3,7 @@ image: docker:stable
 variables:
   DOCKER_HOST: tcp://docker:2375/
   DOCKER_DRIVER: overlay2
-  APP_NAME: safe-website
+  APP_NAME: demo-website
 
 before_script:
   - docker login -u "$BLESSED_REGISTRY_USERNAME" -p "$BLESSED_REGISTRY_PASSWORD" "$BLESSED_REGISTRY_HOSTNAME":5000

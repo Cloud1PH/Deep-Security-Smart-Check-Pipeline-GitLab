@@ -3,6 +3,7 @@ image: docker:stable
 variables:
   DOCKER_HOST: tcp://docker:2375/
   DOCKER_DRIVER: overlay2
+  APP_NAME: demo-website  
 
 before_script:
   - docker login -u "$REGISTRY_USERNAME" -p "$REGISTRY_PASSWORD" "$REGISTRY_HOSTNAME":5000
@@ -23,17 +24,17 @@ lint pipeline:
 build container:
   stage: build
   script:
-    - docker build -t "$REGISTRY_HOSTNAME":5000/basic-website .
-    - docker push "$REGISTRY_HOSTNAME":5000/basic-website
+    - docker build -t "$REGISTRY_HOSTNAME":5000/$APP_NAME .
+    - docker push "$REGISTRY_HOSTNAME":5000/$APP_NAME
 
 run Smart Check:
   stage: security
   script:
-    - docker pull "$REGISTRY_HOSTNAME":5000/basic-website
+    - docker pull "$REGISTRY_HOSTNAME":5000/$APP_NAME
     - >-
         docker run -v /var/run/docker.sock:/var/run/docker.sock
         deepsecurity/smartcheck-scan-action
-        --image-name "$REGISTRY_HOSTNAME":5000/basic-website
+        --image-name "$REGISTRY_HOSTNAME":5000/$APP_NAME
         --smartcheck-host="$DSSC_HOSTNAME"
         --smartcheck-user="$DSSC_USERNAME"
         --smartcheck-password="$DSSC_PASSWORD"
