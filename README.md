@@ -5,10 +5,12 @@
 
 2. Set up your [Gitlab environment](https://github.com/OzNetNerd/Packer-Gitlab)
 
-	Note: Configure your GitLab instance's security group to allow:
+3. If you're using the [Packer version](https://github.com/OzNetNerd/Packer-Gitlab/tree/master/Packer), launch the instance with a Security Group which allows:
 		
-	* Any traffic from your IP
-	* Inbound traffic from any address on port TCP 5000 
+	* All inbound traffic from your IP
+	* Inbound traffic from any address on port TCP 5000 & 5001
+
+	_Note that the [CloudFormation version](https://github.com/OzNetNerd/Packer-Gitlab/tree/master/CloudFormation) does this for you._ 
 
 ## Instructions
 
