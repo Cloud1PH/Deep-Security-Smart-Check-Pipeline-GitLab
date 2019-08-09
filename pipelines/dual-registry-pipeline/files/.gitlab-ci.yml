@@ -5,6 +5,9 @@ variables:
   DOCKER_DRIVER: overlay2
   APP_NAME: demo-website
 
+  # Workaround - https://gitlab.com/gitlab-org/gitlab-runner/issues/4501
+  DOCKER_TLS_CERTDIR: ""
+
 before_script:
   - docker login -u "$BLESSED_REGISTRY_USERNAME" -p "$BLESSED_REGISTRY_PASSWORD" "$BLESSED_REGISTRY_HOSTNAME":5000
   - docker login -u "$DIRTY_REGISTRY_USERNAME" -p "$DIRTY_REGISTRY_PASSWORD" "$DIRTY_REGISTRY_HOSTNAME":5001

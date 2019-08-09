@@ -3,7 +3,10 @@ image: docker:stable
 variables:
   DOCKER_HOST: tcp://docker:2375/
   DOCKER_DRIVER: overlay2
-  APP_NAME: demo-website  
+  APP_NAME: demo-website
+
+  # Workaround - https://gitlab.com/gitlab-org/gitlab-runner/issues/4501
+  DOCKER_TLS_CERTDIR: ""
 
 before_script:
   - docker login -u "$REGISTRY_USERNAME" -p "$REGISTRY_PASSWORD" "$REGISTRY_HOSTNAME":5000
