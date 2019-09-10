@@ -18,6 +18,7 @@ This two staged approach ensures that only known safe images are available for c
 * **<dssc_hostname>** - Smart Check hostname
 * **<dssc_username>** - Smart Check username
 * **<dssc_password>** - Smart Check password
+* **<app_name>** - Name of the demo app
 
 ## Set up your project
 
@@ -38,6 +39,7 @@ This two staged approach ensures that only known safe images are available for c
 		* **DSSC_PASSWORD:** <dssc_password>
 		* **PRE_REGISTRY_USERNAME:** <pre_registry_username>
 		* **PRE_REGISTRY_PASSWORD:** <pre_registry_password>
+		* **APP_NAME:** <app_name>
 		
 		Click "Save variables"
 
@@ -70,7 +72,7 @@ This two staged approach ensures that only known safe images are available for c
 
 	```
 	docker login <blessed_registry_hostname>:5000 -u <blessed_registry_username> -p <blessed_registry_password>
-	docker pull <blessed_registry_hostname>:5000/safe-website
+	docker pull <blessed_registry_hostname>:5000/<app_name>
 	BLESSED_REGISTRY_HOSTNAME=<blessed_registry_hostname> docker-compose up -d
 	```
 
