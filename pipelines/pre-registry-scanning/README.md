@@ -1,7 +1,7 @@
-# Dual Registry Pipeline (Pre-Registry Scanning)
+# Pre-Registry Scanning
 ## Description
 
-This example replicates a typical DevOps pipeline. Upon modification, Docker images are sent to a "dirty" registry which is **only available to developers and Smart Check**.  Smart Check will examine the image's integrity and if an issue is found, it will fail the pipeline. 
+This example replicates a typical DevOps pipeline. Upon modification, Docker images are sent to Smart Check's **built-in** "dirty" registry.  Smart Check will examine the image's integrity and if an issue is found, it will fail the pipeline. 
 
 If no issues are found, the pipeline progresses and the image is placed into a "blessed" registry. This registry is available to users for consumption.
 
